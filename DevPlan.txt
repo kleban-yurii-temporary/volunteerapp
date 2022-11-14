@@ -1,0 +1,30 @@
+[+] 1. Solution Structure
+
+[+] 2. Database Structure
+https://app.dbdesigner.net/designer/schema/575536
+
+[+] 3. Add SQLite (Nuget Packages) + DbContext + Entities
+
+[+] 4. Add DbContext to Program.cs
+
+[+] 5. Migration
+
+[+] 6. Add AutoMapper
+
+[+] 7. Add Status Repository to Services with Get List
+
+[+] 8. Add Api Status Get List
+
+[+] 9. Test in PostMan
+
+[+] 10. Add Swagger 
+https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&tabs=visual-studio
+
+-. Extend swagger desription
+
+-. Add routing lower case
+
+-. Add Syncfusion Components
+
+-. Add Currency Converter to USD/EUR in amounts (openexchange API)
+
