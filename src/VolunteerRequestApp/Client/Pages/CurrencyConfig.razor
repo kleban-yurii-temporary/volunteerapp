@@ -1,0 +1,105 @@
+﻿@page "/config"
+
+@using System.Globalization;
+@using VolunteerRequestApp.Shared.Dtos.Currency
+@inject HttpClient httpClient
+
+<h3>Конфігурація</h3>
+
+<br />
+<h5>Currency API</h5>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        @if (apiConfig != null)
+        {
+            <h5><strong>Settings</strong></h5>
+            <label>Url:</label>
+            <input @bind-value="apiConfig.ApiUrl" class="form-control" readonly />
+            <label>Key:</label>
+            <input @bind-value="apiConfig.ApiKey" class="form-control" readonly />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Базова валюта:</label>
+                    <input @bind-value="apiConfig.BaseCurrency" class="form-control" readonly />
+                </div>
+                <div class="col-md-6">
+                    <label>Додаткова валюта:</label>
+                    <input @bind-value="apiConfig.SecondaryCurrency" class="form-control" readonly />
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-4">
+        @if (currencies != null)
+        {
+            <h5><strong>Actual Info</strong></h5>
+            <label>Оберіть пару</label>
+            <select class="form-control" @onchange="SelectedCurrenciesChanged">
+                @foreach(var cp in currencies)
+                {
+                    <option selected="@(SelectedPair.Id == cp.Id)" value="@cp.Id">@cp.From / @cp.To</option>
+                }
+            </select>
+            <br />
+            @if (history != null)
+            {
+                <table class="table table-bordered table-sm">
+                    <tr>
+                        <th>Дата</th>
+                        <th>Курс</th>
+                    </tr>
+                    @foreach (var h in history.Records)
+                    {
+                        <tr>
+                            <td>@h.CreatedOn.Value.ToString("dd.MM.yyyy HH:mm", new CultureInfo("en"))</td>
+                            <td>@h.Value</td>
+                        </tr>
+                    }
+                </table>
+            }
+        }
+    </div>
+
+        <div class="col-md-4">
+        <h5><strong>Оновлення курсу</strong></h5>
+
+        <select class="form-control">
+
+        </select>
+    </div>
+</div>
+
+@code {
+
+    private CurrencyApiConfig apiConfig;
+    private IEnumerable<CurrencyPairReadDto> currencies;
+    private CurrencyPairHistroryReadDto history;
+
+    private CurrencyPairReadDto SelectedPair = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        apiConfig = await httpClient.GetFromJsonAsync<CurrencyApiConfig>("/api/currencypairs/apiconfig");
+        currencies = await httpClient.GetFromJsonAsync<IEnumerable<CurrencyPairReadDto>>("/api/currencypairs");
+        SelectedPair = currencies.First();
+        await GetHistory();
+    }
+
+    async Task GetHistory()
+    {
+        history = await httpClient.GetFromJsonAsync<CurrencyPairHistroryReadDto>($"/api/currencypairs/{SelectedPair.From}/{SelectedPair.To}/history");
+    }
+
+    async Task SelectedCurrenciesChanged(ChangeEventArgs e)
+    {    
+        Console.WriteLine($"Value: {e.Value}");
+        var idStr = (string)e.Value;
+        SelectedPair = currencies.First(x => x.Id == int.Parse(idStr));
+        await GetHistory();
+    }
+
+}

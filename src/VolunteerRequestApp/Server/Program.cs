@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using VolunteerRequestApp.Server.Core;
 using VolunteerRequestApp.Server.Infrastructure;
+using VolunteerRequestApp.Server.Infrastructure.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,10 +31,15 @@ builder.Services.AddSwaggerGen(options =>
             Url = new Uri("https://kleban.page")
         }
     });
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
 });
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddScoped<StatusRepository>();
+builder.Services.AddScoped<CurrencyPairRepository>();
+builder.Services.AddScoped<CurrencyApiHelper>();
 
 var app = builder.Build();
 

@@ -4,6 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,18 +26,6 @@
     <ProjectReference Include="..\..\VolunteerRequestApp.Server.Infrastructure\VolunteerRequestApp.Server.Infrastructure.csproj" />
     <ProjectReference Include="..\Client\VolunteerRequestApp.Client.csproj" />
     <ProjectReference Include="..\Shared\VolunteerRequestApp.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Data\RequestDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\RequestDB.db-shm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\RequestDB.db-wal">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 

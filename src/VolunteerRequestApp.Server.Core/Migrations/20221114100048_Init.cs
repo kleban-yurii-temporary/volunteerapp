@@ -10,6 +10,20 @@ namespace VolunteerRequestApp.Server.Core.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "CurrencyPairs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    СurrencyFrom = table.Column<string>(type: "TEXT", nullable: true),
+                    СurrencyTo = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CurrencyPairs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Statuses",
                 columns: table => new
                 {
@@ -31,6 +45,27 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Title);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExchangeRates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Value = table.Column<double>(type: "REAL", nullable: true),
+                    CurrencyPairId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExchangeRates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExchangeRates_CurrencyPairs_CurrencyPairId",
+                        column: x => x.CurrencyPairId,
+                        principalTable: "CurrencyPairs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -124,6 +159,16 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "CurrencyPairs",
+                columns: new[] { "Id", "СurrencyFrom", "СurrencyTo" },
+                values: new object[] { 1, "UAH", "USD" });
+
+            migrationBuilder.InsertData(
+                table: "CurrencyPairs",
+                columns: new[] { "Id", "СurrencyFrom", "СurrencyTo" },
+                values: new object[] { 2, "UAH", "EUR" });
+
+            migrationBuilder.InsertData(
                 table: "Statuses",
                 columns: new[] { "Id", "Title" },
                 values: new object[] { 1, "Чорновик" });
@@ -148,10 +193,25 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                 columns: new[] { "Id", "Title" },
                 values: new object[] { 5, "Архівний" });
 
+            migrationBuilder.InsertData(
+                table: "ExchangeRates",
+                columns: new[] { "Id", "CreatedOn", "CurrencyPairId", "Value" },
+                values: new object[] { 1, new DateTime(2022, 11, 14, 10, 0, 47, 872, DateTimeKind.Utc).AddTicks(7196), 1, 0.027076188000000001 });
+
+            migrationBuilder.InsertData(
+                table: "ExchangeRates",
+                columns: new[] { "Id", "CreatedOn", "CurrencyPairId", "Value" },
+                values: new object[] { 2, new DateTime(2022, 11, 14, 10, 0, 47, 872, DateTimeKind.Utc).AddTicks(7206), 2, 0.026223587 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Donations_RequestId",
                 table: "Donations",
                 column: "RequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExchangeRates_CurrencyPairId",
+                table: "ExchangeRates",
+                column: "CurrencyPairId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Photos_RequestId",
@@ -175,10 +235,16 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                 name: "Donations");
 
             migrationBuilder.DropTable(
+                name: "ExchangeRates");
+
+            migrationBuilder.DropTable(
                 name: "Photos");
 
             migrationBuilder.DropTable(
                 name: "RequestTag");
+
+            migrationBuilder.DropTable(
+                name: "CurrencyPairs");
 
             migrationBuilder.DropTable(
                 name: "Requests");

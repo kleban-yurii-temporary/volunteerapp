@@ -20,11 +20,30 @@ https://app.dbdesigner.net/designer/schema/575536
 [+] 10. Add Swagger 
 https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&tabs=visual-studio
 
--. Extend swagger desription
+[+]. Extend swagger desription
 
--. Add routing lower case
+[+]. Add routing lower case
 
--. Add Syncfusion Components
+[+]. Add currencies to db [CurrencyPair / ExchangeRate]
+
+[+]. Add currencies to seed [CurrencyPair / ExchangeRate]
+
+[+]. Migrate
+
+[*]. Add currencies API [Controller + Repository]: [*] Mapper Extend
+		- list (Extend method desription for Swagger (example only))		
+		- item by pair
+		- history by pair (order desc)	
+		- Add / Update currency pair
+
+[+]. Create test queries in Postman / check it
+
+[*]. Add openexchange info to configuration (appsetting.json)
+
+--
+
+[-]. Create openexchange reading objects
+
 
 -. Add Currency Converter to USD/EUR in amounts (openexchange API)
 

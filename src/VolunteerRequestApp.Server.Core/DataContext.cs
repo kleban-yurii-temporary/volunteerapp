@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace VolunteerRequestApp.Server.Core
 {
@@ -15,6 +16,8 @@ namespace VolunteerRequestApp.Server.Core
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<CurrencyPair> CurrencyPairs { get; set; }
+        public DbSet<ExchangeRate> ExchangeRates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +27,18 @@ namespace VolunteerRequestApp.Server.Core
                 new Status {Id = 3, Title = "Завершений" },
                 new Status {Id = 4, Title = "Відмінений" },
                 new Status {Id = 5, Title = "Архівний" }
+            });
+
+            modelBuilder.Entity<CurrencyPair>().HasData(new CurrencyPair[]
+            {
+                new CurrencyPair { Id = 1, СurrencyFrom = "UAH", СurrencyTo = "USD"},
+                new CurrencyPair { Id = 2, СurrencyFrom = "UAH", СurrencyTo = "EUR"},
+            });
+
+            modelBuilder.Entity<ExchangeRate>().HasData(new ExchangeRate[]
+            {
+                new ExchangeRate { Id = 1, CurrencyPairId = 1, CreatedOn = DateTime.UtcNow, Value = 0.027076188 },
+                new ExchangeRate { Id = 2, CurrencyPairId = 2, CreatedOn = DateTime.UtcNow, Value = 0.026223587 }
             });
 
             modelBuilder.Entity<Request>().HasMany(x=> x.Tags).WithMany(x => x.Requests);

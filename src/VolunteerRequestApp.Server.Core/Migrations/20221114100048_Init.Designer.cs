@@ -11,7 +11,7 @@ using VolunteerRequestApp.Server.Core;
 namespace VolunteerRequestApp.Server.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221108150413_Init")]
+    [Migration("20221114100048_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,37 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                     b.HasIndex("TagsTitle");
 
                     b.ToTable("RequestTag");
+                });
+
+            modelBuilder.Entity("VolunteerRequestApp.Server.Core.CurrencyPair", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("СurrencyFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("СurrencyTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CurrencyPairs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            СurrencyFrom = "UAH",
+                            СurrencyTo = "USD"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            СurrencyFrom = "UAH",
+                            СurrencyTo = "EUR"
+                        });
                 });
 
             modelBuilder.Entity("VolunteerRequestApp.Server.Core.Donation", b =>
@@ -57,6 +88,44 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                     b.HasIndex("RequestId");
 
                     b.ToTable("Donations");
+                });
+
+            modelBuilder.Entity("VolunteerRequestApp.Server.Core.ExchangeRate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("CurrencyPairId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double?>("Value")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyPairId");
+
+                    b.ToTable("ExchangeRates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedOn = new DateTime(2022, 11, 14, 10, 0, 47, 872, DateTimeKind.Utc).AddTicks(7196),
+                            CurrencyPairId = 1,
+                            Value = 0.027076188000000001
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedOn = new DateTime(2022, 11, 14, 10, 0, 47, 872, DateTimeKind.Utc).AddTicks(7206),
+                            CurrencyPairId = 2,
+                            Value = 0.026223587
+                        });
                 });
 
             modelBuilder.Entity("VolunteerRequestApp.Server.Core.Photo", b =>
@@ -193,6 +262,17 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                     b.Navigation("Request");
                 });
 
+            modelBuilder.Entity("VolunteerRequestApp.Server.Core.ExchangeRate", b =>
+                {
+                    b.HasOne("VolunteerRequestApp.Server.Core.CurrencyPair", "CurrenciesPair")
+                        .WithMany("Records")
+                        .HasForeignKey("CurrencyPairId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CurrenciesPair");
+                });
+
             modelBuilder.Entity("VolunteerRequestApp.Server.Core.Photo", b =>
                 {
                     b.HasOne("VolunteerRequestApp.Server.Core.Request", "Request")
@@ -209,6 +289,11 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                         .HasForeignKey("StatusId");
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("VolunteerRequestApp.Server.Core.CurrencyPair", b =>
+                {
+                    b.Navigation("Records");
                 });
 
             modelBuilder.Entity("VolunteerRequestApp.Server.Core.Request", b =>

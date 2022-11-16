@@ -3,22 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolunteerRequestApp.Server", "VolunteerRequestApp\Server\VolunteerRequestApp.Server.csproj", "{2752D577-B5B6-442B-94C2-DC1B714003C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VolunteerRequestApp.Server", "VolunteerRequestApp\Server\VolunteerRequestApp.Server.csproj", "{2752D577-B5B6-442B-94C2-DC1B714003C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolunteerRequestApp.Client", "VolunteerRequestApp\Client\VolunteerRequestApp.Client.csproj", "{B02490AC-E613-4174-BABE-182E757277E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VolunteerRequestApp.Client", "VolunteerRequestApp\Client\VolunteerRequestApp.Client.csproj", "{B02490AC-E613-4174-BABE-182E757277E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolunteerRequestApp.Shared", "VolunteerRequestApp\Shared\VolunteerRequestApp.Shared.csproj", "{F4395523-CD41-4242-BA3D-6E09781A573A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VolunteerRequestApp.Shared", "VolunteerRequestApp\Shared\VolunteerRequestApp.Shared.csproj", "{F4395523-CD41-4242-BA3D-6E09781A573A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolunteerRequestApp.Server.Core", "VolunteerRequestApp.Server.Core\VolunteerRequestApp.Server.Core.csproj", "{6AB4A5C4-4B58-48C9-9B0A-DE993530AD56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VolunteerRequestApp.Server.Core", "VolunteerRequestApp.Server.Core\VolunteerRequestApp.Server.Core.csproj", "{6AB4A5C4-4B58-48C9-9B0A-DE993530AD56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolunteerRequestApp.Server.Infrastructure", "VolunteerRequestApp.Server.Infrastructure\VolunteerRequestApp.Server.Infrastructure.csproj", "{677B56CD-4C09-46B7-9CB6-8864C171BB70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VolunteerRequestApp.Server.Infrastructure", "VolunteerRequestApp.Server.Infrastructure\VolunteerRequestApp.Server.Infrastructure.csproj", "{677B56CD-4C09-46B7-9CB6-8864C171BB70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolunteerRequestApp.Client.Infrastructure", "VolunteerRequestApp.Client.Infrastructure\VolunteerRequestApp.Client.Infrastructure.csproj", "{9654A50B-D6F2-4F27-8362-2FC3F12CDC64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VolunteerRequestApp.Client.Infrastructure", "VolunteerRequestApp.Client.Infrastructure\VolunteerRequestApp.Client.Infrastructure.csproj", "{9654A50B-D6F2-4F27-8362-2FC3F12CDC64}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0257FF5F-1B00-4F9A-B359-E5A4B92437AE}"
-	ProjectSection(SolutionItems) = preProject
-		DevPlan.txt = DevPlan.txt
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{7BB503C6-AEDD-48DC-8461-BC33D23D3F56}"
 EndProject
