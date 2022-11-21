@@ -2,6 +2,7 @@
 using VolunteerRequestApp.Server.Core;
 using VolunteerRequestApp.Shared.Dtos;
 using VolunteerRequestApp.Shared.Dtos.Currency;
+using VolunteerRequestApp.Shared.Dtos.Request;
 
 namespace VolunteerRequestApp.Server.Infrastructure.Helpers
 {
@@ -24,8 +25,10 @@ namespace VolunteerRequestApp.Server.Infrastructure.Helpers
                 .ForMember(dest => dest.To, opt => opt.MapFrom(c => c.СurrencyTo))
                 .ForMember(dest => dest.Records, opt => opt.MapFrom(c => c.Records.OrderByDescending(x => x.CreatedOn))); ;
 
+            CreateMap<RequestCreateDto, Request>();
+            CreateMap<Request, RequestReadDto>();
 
-
+            CreateMap<Request, RequestCardViewDto>();
         }
     }
 }

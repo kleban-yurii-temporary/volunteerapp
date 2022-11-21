@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using System.Reflection;
 using VolunteerRequestApp.Server.Core;
 using VolunteerRequestApp.Server.Infrastructure;
@@ -40,6 +41,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddScoped<StatusRepository>();
 builder.Services.AddScoped<CurrencyPairRepository>();
 builder.Services.AddScoped<CurrencyApiHelper>();
+builder.Services.AddScoped<RequestRepository>();
 
 var app = builder.Build();
 
@@ -61,6 +63,7 @@ else
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
+
 app.UseStaticFiles();
 
 app.UseRouting();

@@ -1,0 +1,65 @@
+﻿@using System.Globalization;
+@using VolunteerRequestApp.Client.Infrastructure;
+@using VolunteerRequestApp.Shared.Dtos.Currency;
+@using VolunteerRequestApp.Shared.Dtos.Request;
+
+@inject NavigationManager Navigation
+@inject HttpCurrencyPairService currencyService
+
+<div class="card">
+    <div style="background-color:#ccc; background-image:url(/api/requests/image/@Request.Id); background-size: cover; background-position:center center; height: 200px; width: 100%"></div>
+  <div class="card-body">
+    <h5 class="card-title">@Request.Title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+        <div class="row">
+            <div class="col-6">
+                Дата відкриття:
+                <strong>@Request.OpenDate.Value.ToString("dd.MM.yyyy", new CultureInfo("en"))</strong>
+            </div>
+            <div class="col-6">
+                Дата закриття:
+                <strong>@Request.CloseDate.Value.ToString("dd.MM.yyyy", new CultureInfo("en"))</strong>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                Потрібно: <strong>@Math.Round((decimal)Request.NeedSum, 2)</strong> грн.<br />
+                Зібрано: <strong>@Math.Round((decimal)Request.CurrentSum, 2)</strong> грн.
+                Залишилося зібрати: <strong>@(Math.Round((decimal)Request.NeedSum - (decimal)Request.CurrentSum, 2))</strong> грн.
+            </div>
+            <div class="col-6">
+                У інших валютах:
+                @foreach (var rt in CurrencyPairs)
+                {
+                    <div>@rt.To: <strong>@Math.Round((decimal)Request.NeedSum * (decimal)rt.CurrentValue, 2)</strong></div>
+                }
+            </div>
+        </div>
+
+        <div class="progress" style="margin: 7px 0">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="44" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+        </div>
+
+        <div class="progress" style="margin: 7px 0">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-sm">Деталі</button>
+        <button type="button" class="btn btn-info btn-sm">Редагувати</button>
+        <button type="button" class="btn btn-info btn-sm">Редагувати [+]</button>
+  </div>
+</div>
+
+@code {
+    [Parameter]
+    public RequestReadDto? Request { get; set; }
+
+    private IEnumerable<CurrencyPairReadDto> CurrencyPairs = new List<CurrencyPairReadDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        CurrencyPairs = await currencyService.GetCurrencyPairsListAsync(true);
+    }
+}

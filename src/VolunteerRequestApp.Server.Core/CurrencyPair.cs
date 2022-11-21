@@ -16,5 +16,9 @@ namespace VolunteerRequestApp.Server.Core
         public string? СurrencyFrom { get; set; }
         public string? СurrencyTo { get; set; }
         public virtual ICollection<ExchangeRate>? Records { get; }
+        public bool IsActive { get; set; }
+
+        [NotMapped]
+        public double TopRate { get { return (double)Records.MaxBy(x => x.CreatedOn).Value; }  }
     }
 }

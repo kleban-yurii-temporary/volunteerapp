@@ -1,9 +1,43 @@
 ﻿@page "/"
+@using VolunteerRequestApp.Client.Infrastructure;
+@using VolunteerRequestApp.Shared.Dtos.Currency;
+@using VolunteerRequestApp.Shared.Dtos.Request;
+
+@inject HttpRequestService requestService
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h3>Запити</h3>
+@*
+<div class="row">
+    <div class="col-2">
+        <label>Назва</label>
+        <input type="text" class="form-control" />
+    </div>
+    <div class="col-2">
+        <label>Назва</label>
+        <input type="text" class="form-control" />
+    </div>
+</div>
+*@
 
-Welcome to your new app.
+<SpinnerComponent Visible="!Requests.Any()"></SpinnerComponent>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div class="row">
+    @foreach (var r in Requests)
+    {
+        <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 col-sm-12">
+            <RequestCardComponent Request="r"></RequestCardComponent>
+        </div>
+    }
+</div>
+
+@code {
+
+    private IEnumerable<RequestReadDto> Requests = new List<RequestReadDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Requests = await requestService.GetRequestsAsync();        
+    }
+}

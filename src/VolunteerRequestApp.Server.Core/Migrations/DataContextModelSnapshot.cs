@@ -38,6 +38,9 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("СurrencyFrom")
                         .HasColumnType("TEXT");
 
@@ -52,12 +55,14 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                         new
                         {
                             Id = 1,
+                            IsActive = true,
                             СurrencyFrom = "UAH",
                             СurrencyTo = "USD"
                         },
                         new
                         {
                             Id = 2,
+                            IsActive = true,
                             СurrencyFrom = "UAH",
                             СurrencyTo = "EUR"
                         });
@@ -113,14 +118,14 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2022, 11, 14, 10, 0, 47, 872, DateTimeKind.Utc).AddTicks(7196),
+                            CreatedOn = new DateTime(2022, 11, 18, 10, 34, 46, 333, DateTimeKind.Utc).AddTicks(8722),
                             CurrencyPairId = 1,
                             Value = 0.027076188000000001
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2022, 11, 14, 10, 0, 47, 872, DateTimeKind.Utc).AddTicks(7206),
+                            CreatedOn = new DateTime(2022, 11, 18, 10, 34, 46, 333, DateTimeKind.Utc).AddTicks(8725),
                             CurrencyPairId = 2,
                             Value = 0.026223587
                         });
@@ -162,6 +167,12 @@ namespace VolunteerRequestApp.Server.Core.Migrations
 
                     b.Property<double?>("CurrentSum")
                         .HasColumnType("REAL");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsFavourite")
+                        .HasColumnType("INTEGER");
 
                     b.Property<double?>("NeedSum")
                         .HasColumnType("REAL");

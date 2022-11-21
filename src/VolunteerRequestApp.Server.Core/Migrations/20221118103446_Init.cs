@@ -16,7 +16,8 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     СurrencyFrom = table.Column<string>(type: "TEXT", nullable: true),
-                    СurrencyTo = table.Column<string>(type: "TEXT", nullable: true)
+                    СurrencyTo = table.Column<string>(type: "TEXT", nullable: true),
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,13 +76,15 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
+                    Details = table.Column<string>(type: "TEXT", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: true),
                     OpenDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     CloseDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     StatusId = table.Column<int>(type: "INTEGER", nullable: true),
                     NeedSum = table.Column<double>(type: "REAL", nullable: true),
                     CurrentSum = table.Column<double>(type: "REAL", nullable: true),
-                    TargetMilitary = table.Column<string>(type: "TEXT", nullable: true)
+                    TargetMilitary = table.Column<string>(type: "TEXT", nullable: true),
+                    IsFavourite = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,13 +163,13 @@ namespace VolunteerRequestApp.Server.Core.Migrations
 
             migrationBuilder.InsertData(
                 table: "CurrencyPairs",
-                columns: new[] { "Id", "СurrencyFrom", "СurrencyTo" },
-                values: new object[] { 1, "UAH", "USD" });
+                columns: new[] { "Id", "IsActive", "СurrencyFrom", "СurrencyTo" },
+                values: new object[] { 1, true, "UAH", "USD" });
 
             migrationBuilder.InsertData(
                 table: "CurrencyPairs",
-                columns: new[] { "Id", "СurrencyFrom", "СurrencyTo" },
-                values: new object[] { 2, "UAH", "EUR" });
+                columns: new[] { "Id", "IsActive", "СurrencyFrom", "СurrencyTo" },
+                values: new object[] { 2, true, "UAH", "EUR" });
 
             migrationBuilder.InsertData(
                 table: "Statuses",
@@ -196,12 +199,12 @@ namespace VolunteerRequestApp.Server.Core.Migrations
             migrationBuilder.InsertData(
                 table: "ExchangeRates",
                 columns: new[] { "Id", "CreatedOn", "CurrencyPairId", "Value" },
-                values: new object[] { 1, new DateTime(2022, 11, 14, 10, 0, 47, 872, DateTimeKind.Utc).AddTicks(7196), 1, 0.027076188000000001 });
+                values: new object[] { 1, new DateTime(2022, 11, 18, 10, 34, 46, 333, DateTimeKind.Utc).AddTicks(8722), 1, 0.027076188000000001 });
 
             migrationBuilder.InsertData(
                 table: "ExchangeRates",
                 columns: new[] { "Id", "CreatedOn", "CurrencyPairId", "Value" },
-                values: new object[] { 2, new DateTime(2022, 11, 14, 10, 0, 47, 872, DateTimeKind.Utc).AddTicks(7206), 2, 0.026223587 });
+                values: new object[] { 2, new DateTime(2022, 11, 18, 10, 34, 46, 333, DateTimeKind.Utc).AddTicks(8725), 2, 0.026223587 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Donations_RequestId",

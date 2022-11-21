@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <UserSecretsId>a2fd9cd8-f40c-4cec-83a8-c40250655ccd</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,6 +27,12 @@
     <ProjectReference Include="..\..\VolunteerRequestApp.Server.Infrastructure\VolunteerRequestApp.Server.Infrastructure.csproj" />
     <ProjectReference Include="..\Client\VolunteerRequestApp.Client.csproj" />
     <ProjectReference Include="..\Shared\VolunteerRequestApp.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="assets\requests\no-picture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 

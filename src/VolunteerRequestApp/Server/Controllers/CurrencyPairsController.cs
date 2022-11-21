@@ -12,18 +12,22 @@ namespace VolunteerRequestApp.Server.Controllers
     public class CurrencyPairsController : ControllerBase
     {
         private readonly CurrencyPairRepository currencyPairRepository;
-        private readonly CurrencyApiHelper currencyApiHelper;
-        public CurrencyPairsController(CurrencyPairRepository currencyPairRepository, 
-            CurrencyApiHelper currencyApiHelper)
+
+        public CurrencyPairsController(CurrencyPairRepository currencyPairRepository)
         {
             this.currencyPairRepository = currencyPairRepository;
-            this.currencyApiHelper = currencyApiHelper;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CurrencyPairReadDto>> GetListAsync()
+        public async Task<IEnumerable<CurrencyPairReadDto>> GetListAsync(bool activeOnly = false)
         {
-            return await currencyPairRepository.GetListAsync();
+            return await currencyPairRepository.GetListAsync(activeOnly);
+        }
+
+        [HttpPost("changestatus/{id}")]
+        public async Task<bool> ChangeCurrencyStatusAsync(int id)
+        {
+            return await currencyPairRepository.ChangeCurrencyPairStatus(id);
         }
 
         /// <summary>
@@ -56,10 +60,6 @@ namespace VolunteerRequestApp.Server.Controllers
             return await currencyPairRepository.AddExchangeRateAsync(obj);
         }
 
-        [HttpGet("apiconfig")]
-        public CurrencyApiConfig GetApiConfigAsync()
-        {
-            return currencyApiHelper.GetConfig();
-        }
+                      
     }
 }

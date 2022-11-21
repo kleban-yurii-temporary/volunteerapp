@@ -31,12 +31,12 @@ namespace VolunteerRequestApp.Server.Infrastructure.Helpers
             return configData;
         }
 
-        public string GetLatestUrl(string from, string to)
+        public string GetLatestUrl(params string[] currencies)
         {
-            return $"{configData.ApiUrl}/latest.json?app_id={configData.ApiKey}&base={configData.BaseCurrency}&symbols={to},{from}";
+            return $"{configData.ApiUrl}/latest.json?app_id={configData.ApiKey}&base={configData.BaseCurrency}&symbols={string.Join(",", currencies)}";
         }
 
-        public string GetCurrencies()
+        public string GetCurrenciesListUrl()
         {
             return $"{configData.ApiUrl}/currencies.json";
         }

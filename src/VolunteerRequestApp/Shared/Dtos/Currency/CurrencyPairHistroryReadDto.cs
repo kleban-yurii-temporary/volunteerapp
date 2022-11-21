@@ -13,6 +13,7 @@ namespace VolunteerRequestApp.Shared.Dtos.Currency
         public string? From { get; set; }
         public string? To { get; set; }
         public IEnumerable<ExchangeRateReadDto>? Records { get; set; }
+        public bool IsActive { get; set; }
     }
 
     public class ExchangeRateReadDto

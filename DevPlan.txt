@@ -38,12 +38,36 @@ https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swa
 
 [+]. Create test queries in Postman / check it
 
-[*]. Add openexchange info to configuration (appsetting.json)
+[+]. Add openexchange info to configuration (appsetting.json)
+
+--- Currency Api 
+
+[*] Ad Spinner Component
+
+[*]. Create openexchange reading objects
+
+[*]. Add currency IsActive Status Entity - (view only is active for Requsts)
+
+[*]. Add currency Rate IsActiveChange Status Change to UI + Controller
+
+[*]. Get currencies list
+
+[*] Get currency rate
+
+[-] Save currency rate:
+	- update selected
+	- update history
+
+--- Request
+
+[-] Create Dtos
+
+[-] Create Request
+
+[-] Get List Request
+
+[-] Create RequestComponent
 
 --
 
-[-]. Create openexchange reading objects
-
-
--. Add Currency Converter to USD/EUR in amounts (openexchange API)
 

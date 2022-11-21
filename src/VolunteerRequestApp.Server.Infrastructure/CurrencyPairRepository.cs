@@ -65,9 +65,24 @@ namespace VolunteerRequestApp.Server.Infrastructure
             return mapper.Map<CurrencyPairReadDto>(await getListByPair(from, to));
         }
 
-        public async Task<IEnumerable<CurrencyPairReadDto>> GetListAsync()
+        public async Task<IEnumerable<CurrencyPairReadDto>> GetListAsync(bool activeOnly)
         {
-            return mapper.Map<IEnumerable<CurrencyPairReadDto>>(await dataContext.CurrencyPairs.Include(x => x.Records).ToListAsync());
+            var data =  mapper.Map<IEnumerable<CurrencyPairReadDto>>(await dataContext
+                .CurrencyPairs
+                .Include(x => x.Records).ToListAsync());
+
+            if (activeOnly)
+                data = data.Where(x => x.IsActive).ToList();
+
+            return data;
+        }
+
+        public async Task<bool> ChangeCurrencyPairStatus(int id)
+        {
+            var pair = await dataContext.CurrencyPairs.FindAsync(id);
+            pair.IsActive = !pair.IsActive;
+            await dataContext.SaveChangesAsync();
+            return pair.IsActive;
         }
     }
 }

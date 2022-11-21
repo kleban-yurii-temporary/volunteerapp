@@ -1,8 +1,10 @@
 ﻿@page "/config"
 
-@using System.Globalization;
+@using System.Globalization
+@using VolunteerRequestApp.Client.Infrastructure;
 @using VolunteerRequestApp.Shared.Dtos.Currency
-@inject HttpClient httpClient
+
+@inject HttpCurrencyPairService pairRepository
 
 <h3>Конфігурація</h3>
 
@@ -31,6 +33,10 @@
                 </div>
             </div>
         }
+        else
+        {
+            <SpinnerComponent></SpinnerComponent>
+        }
     </div>
 
     <div class="col-md-4">
@@ -39,12 +45,16 @@
             <h5><strong>Actual Info</strong></h5>
             <label>Оберіть пару</label>
             <select class="form-control" @onchange="SelectedCurrenciesChanged">
-                @foreach(var cp in currencies)
+                @foreach (var cp in currencies)
                 {
                     <option selected="@(SelectedPair.Id == cp.Id)" value="@cp.Id">@cp.From / @cp.To</option>
                 }
             </select>
-            <br />
+            <hr />
+            <button type="button" class="btn btn-sm btn-warning float-end" @onclick="ChangeActivityState">Змінити</button>
+            <label>Статус: <strong class="badge @(SelectedPair.IsActive? "bg-success" : "bg-danger")">@(SelectedPair.IsActive ? "Активний" : "Неактивний")</strong></label>
+
+            <hr />
             @if (history != null)
             {
                 <table class="table table-bordered table-sm">
@@ -62,44 +72,119 @@
                 </table>
             }
         }
+        else
+        {
+            <SpinnerComponent></SpinnerComponent>
+        }
     </div>
 
-        <div class="col-md-4">
-        <h5><strong>Оновлення курсу</strong></h5>
+    <div class="col-md-4">
 
-        <select class="form-control">
+        @if (apiCurrenciesList != null)
+        {
+            <h5><strong>Оновлення курсу</strong></h5>
+            <label>Оберіть валюту</label>
 
-        </select>
+            <div class="input-group">
+                <select class="form-control" @onchange="SelectedApiCurrencyChanged">
+                    @foreach (var c in apiCurrenciesList)
+                    {
+                        <option value="@c.Key">@c.Key (@c.Value)</option>
+                    }
+                </select>
+                <div class="input-group-append">
+                    <button @onclick="GetCurrencyRate" class="btn btn-primary">Отримати курс</button>
+                </div>
+            </div>
+
+            <hr />
+
+            <div style="display: @rateVisibilityState">
+                <label>Курс <strong>@CurrencyRatePair.From/@CurrencyRatePair.To</strong></label>
+                <div class="input-group">
+                    <input type="number" @bind-value="CurrencyRatePair.CurrentValue" class="form-control" />
+                    <div class="input-group-append">
+                        <button type="button" @onclick="SaveCurrencyRate" class="btn btn-primary">Зберегти</button>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <SpinnerComponent></SpinnerComponent>
+        }
     </div>
 </div>
 
 @code {
 
     private CurrencyApiConfig apiConfig;
+
     private IEnumerable<CurrencyPairReadDto> currencies;
     private CurrencyPairHistroryReadDto history;
-
     private CurrencyPairReadDto SelectedPair = null;
+    private CurrencyPairReadDto CurrencyRatePair = new CurrencyPairReadDto();
+    private Dictionary<string, string> apiCurrenciesList;
+    private string selectedApiCurrency = "";
+
+    private string rateVisibilityState = "none";
+
 
     protected override async Task OnInitializedAsync()
     {
-        apiConfig = await httpClient.GetFromJsonAsync<CurrencyApiConfig>("/api/currencypairs/apiconfig");
-        currencies = await httpClient.GetFromJsonAsync<IEnumerable<CurrencyPairReadDto>>("/api/currencypairs");
+        apiConfig = await pairRepository.GetApiConfigAsync();
+        currencies = await pairRepository.GetCurrencyPairsListAsync();
         SelectedPair = currencies.First();
         await GetHistory();
+
+        apiCurrenciesList = await pairRepository.GetCurrenciesListAsync();
+        selectedApiCurrency = apiCurrenciesList.First().Key;
     }
 
     async Task GetHistory()
     {
-        history = await httpClient.GetFromJsonAsync<CurrencyPairHistroryReadDto>($"/api/currencypairs/{SelectedPair.From}/{SelectedPair.To}/history");
+        history = await pairRepository.GetHistoryAsync(SelectedPair.From, SelectedPair.To);
     }
 
     async Task SelectedCurrenciesChanged(ChangeEventArgs e)
-    {    
+    {
         Console.WriteLine($"Value: {e.Value}");
         var idStr = (string)e.Value;
         SelectedPair = currencies.First(x => x.Id == int.Parse(idStr));
         await GetHistory();
     }
 
+    async Task SelectedApiCurrencyChanged(ChangeEventArgs e)
+    {
+        selectedApiCurrency = (string)e.Value;
+    }
+
+    async void GetCurrencyRate()
+    {
+        CurrencyRatePair = await pairRepository.GetCurrencyRateAsync(selectedApiCurrency);
+        rateVisibilityState = "block";
+        StateHasChanged();
+    }
+
+    async void SaveCurrencyRate()
+    {
+        SelectedPair = await pairRepository.SaveCurrencyPairDataAsync(new CurrencyPairCreateUpdateDto 
+            {
+                From = CurrencyRatePair.From,
+                To = CurrencyRatePair.To,
+                CurrentValue = CurrencyRatePair.CurrentValue
+            });
+
+        if(!currencies.Any(x=> x.Id == SelectedPair.Id))
+            currencies = await pairRepository.GetCurrencyPairsListAsync();            
+
+        await GetHistory();
+        StateHasChanged();
+    }
+
+    async Task ChangeActivityState()
+    {
+        SelectedPair.IsActive = await pairRepository.ChangeCurrencyPairStatusAsync(SelectedPair.Id);
+
+    }
 }
