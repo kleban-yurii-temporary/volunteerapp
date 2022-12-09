@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Syncfusion.Blazor;
+using System.Globalization;
 using VolunteerRequestApp.Client;
 using VolunteerRequestApp.Client.Infrastructure;
 
@@ -10,5 +12,9 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<HttpCurrencyPairService>();
 builder.Services.AddScoped<HttpRequestService>();
+builder.Services.AddScoped<HttpStatusService>();
+
+builder.Services.AddSyncfusionBlazor();
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzcyOTI3QDMyMzAyZTMzMmUzMEtNUU81MmxwMmt5S1Mzd2ZjTkVFTlpNMmNvdCtJMGwzSlA5VFpDejYzeEk9");
 
 await builder.Build().RunAsync();

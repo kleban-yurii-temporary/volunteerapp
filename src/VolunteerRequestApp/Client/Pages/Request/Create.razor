@@ -1,0 +1,67 @@
+﻿@page "/requests/new"
+@using VolunteerRequestApp.Client.Infrastructure;
+@using VolunteerRequestApp.Shared.Dtos.Request;
+
+@inject HttpRequestService requestService
+@inject NavigationManager navigation
+
+<h4>Новий запит</h4>
+<hr />
+
+
+<div class="row">
+    <div class="col-6">
+        <SfCard>
+            <CardHeader>Додавання нового запиту</CardHeader>
+            <CardContent>
+                <EditForm Model="@Request" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
+                    <DataAnnotationsValidator />
+                    <SfTextBox @bind-Value="@Request.Title" FloatLabelType="FloatLabelType.Auto" Placeholder="Назва запиту *"></SfTextBox>
+                    <ValidationMessage For="@(() => Request.Title)" class="badge bg-danger" />
+                    <br /><br />
+                    <SfButton type="submit" IsPrimary="true">Зберегти</SfButton>
+                </EditForm>
+            </CardContent>
+        </SfCard>
+    </div>
+</div>
+
+<SfToast ID="toast_type" @ref=sfToast ShowCloseButton="true" ShowProgressBar="true">
+    <ToastPosition X="Right" Y="Top"></ToastPosition>
+</SfToast>
+
+@code {
+    RequestCreateDto Request = new RequestCreateDto();
+
+    SfToast sfToast;
+
+    async Task OnValidSubmit()
+    {
+        var id = await requestService.CreateRequestsAsync(Request);
+                
+        await sfToast.ShowAsync(new ToastModel
+            {
+                Title = "Ура!",
+                Content = $"Дані збережено! Ви будете перенаправдені на сторінку редагування",
+                CssClass = "e-toast-success",
+                Icon = "e-success toast-icons"
+            });        
+            
+            await Task.Delay(1000);
+
+        navigation.NavigateTo($"/requests/edit/{id}");
+
+        //StateHasChanged();
+    }
+
+    async Task OnInvalidSubmit()
+    {
+        await sfToast.ShowAsync(new ToastModel
+            {
+                Title = ":( Сумно",                
+                Content = $"Знайдено помилки у даних, виправте їх та зберержіть результат",
+                CssClass = "e-toast-error",
+                Icon = "e-error toast-icons"
+            });
+    }
+}

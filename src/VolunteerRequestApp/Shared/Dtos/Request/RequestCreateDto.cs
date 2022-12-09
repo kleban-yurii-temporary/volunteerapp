@@ -10,6 +10,8 @@ namespace VolunteerRequestApp.Shared.Dtos.Request
 {
     public class RequestCreateDto
     {
+        [Required(ErrorMessage = "Введіть назву нового запиту")]
+        [MinLength(5, ErrorMessage = "Мінімальна довжина поля 5 символів")]
         public string? Title { get; set; }
     }
 }

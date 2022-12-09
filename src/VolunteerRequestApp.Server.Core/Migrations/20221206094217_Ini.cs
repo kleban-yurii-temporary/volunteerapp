@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VolunteerRequestApp.Server.Core.Migrations
 {
-    public partial class Init : Migration
+    public partial class Ini : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,17 +35,6 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Statuses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tags",
-                columns: table => new
-                {
-                    Title = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tags", x => x.Title);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,9 +71,7 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                     CloseDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     StatusId = table.Column<int>(type: "INTEGER", nullable: true),
                     NeedSum = table.Column<double>(type: "REAL", nullable: true),
-                    CurrentSum = table.Column<double>(type: "REAL", nullable: true),
-                    TargetMilitary = table.Column<string>(type: "TEXT", nullable: true),
-                    IsFavourite = table.Column<bool>(type: "INTEGER", nullable: false)
+                    IsFavorite = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -104,8 +91,8 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     RequestId = table.Column<int>(type: "INTEGER", nullable: true),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    UserId = table.Column<string>(type: "TEXT", nullable: true),
-                    Sum = table.Column<double>(type: "REAL", nullable: true)
+                    UserName = table.Column<string>(type: "TEXT", nullable: true),
+                    Amount = table.Column<double>(type: "REAL", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -135,30 +122,6 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                         column: x => x.RequestId,
                         principalTable: "Requests",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RequestTag",
-                columns: table => new
-                {
-                    RequestsId = table.Column<int>(type: "INTEGER", nullable: false),
-                    TagsTitle = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RequestTag", x => new { x.RequestsId, x.TagsTitle });
-                    table.ForeignKey(
-                        name: "FK_RequestTag_Requests_RequestsId",
-                        column: x => x.RequestsId,
-                        principalTable: "Requests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RequestTag_Tags_TagsTitle",
-                        column: x => x.TagsTitle,
-                        principalTable: "Tags",
-                        principalColumn: "Title",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -199,12 +162,12 @@ namespace VolunteerRequestApp.Server.Core.Migrations
             migrationBuilder.InsertData(
                 table: "ExchangeRates",
                 columns: new[] { "Id", "CreatedOn", "CurrencyPairId", "Value" },
-                values: new object[] { 1, new DateTime(2022, 11, 18, 10, 34, 46, 333, DateTimeKind.Utc).AddTicks(8722), 1, 0.027076188000000001 });
+                values: new object[] { 1, new DateTime(2022, 12, 6, 9, 42, 17, 237, DateTimeKind.Utc).AddTicks(182), 1, 0.027076188000000001 });
 
             migrationBuilder.InsertData(
                 table: "ExchangeRates",
                 columns: new[] { "Id", "CreatedOn", "CurrencyPairId", "Value" },
-                values: new object[] { 2, new DateTime(2022, 11, 18, 10, 34, 46, 333, DateTimeKind.Utc).AddTicks(8725), 2, 0.026223587 });
+                values: new object[] { 2, new DateTime(2022, 12, 6, 9, 42, 17, 237, DateTimeKind.Utc).AddTicks(187), 2, 0.026223587 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Donations_RequestId",
@@ -225,11 +188,6 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                 name: "IX_Requests_StatusId",
                 table: "Requests",
                 column: "StatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RequestTag_TagsTitle",
-                table: "RequestTag",
-                column: "TagsTitle");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -244,16 +202,10 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                 name: "Photos");
 
             migrationBuilder.DropTable(
-                name: "RequestTag");
-
-            migrationBuilder.DropTable(
                 name: "CurrencyPairs");
 
             migrationBuilder.DropTable(
                 name: "Requests");
-
-            migrationBuilder.DropTable(
-                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Statuses");

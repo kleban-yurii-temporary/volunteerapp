@@ -11,7 +11,6 @@ namespace VolunteerRequestApp.Server.Infrastructure.Helpers
     public class CurrencyApiHelper
     {
         private readonly IConfiguration configuration;
-
         private readonly CurrencyApiConfig configData;
 
         public CurrencyApiHelper(IConfiguration configuration)

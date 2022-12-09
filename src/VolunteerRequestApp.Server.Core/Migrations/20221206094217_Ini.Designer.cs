@@ -11,28 +11,13 @@ using VolunteerRequestApp.Server.Core;
 namespace VolunteerRequestApp.Server.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221118103446_Init")]
-    partial class Init
+    [Migration("20221206094217_Ini")]
+    partial class Ini
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.11");
-
-            modelBuilder.Entity("RequestTag", b =>
-                {
-                    b.Property<int>("RequestsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("TagsTitle")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("RequestsId", "TagsTitle");
-
-                    b.HasIndex("TagsTitle");
-
-                    b.ToTable("RequestTag");
-                });
 
             modelBuilder.Entity("VolunteerRequestApp.Server.Core.CurrencyPair", b =>
                 {
@@ -76,16 +61,16 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<double?>("Amount")
+                        .HasColumnType("REAL");
+
                     b.Property<DateTime?>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("RequestId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<double?>("Sum")
-                        .HasColumnType("REAL");
-
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -120,14 +105,14 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2022, 11, 18, 10, 34, 46, 333, DateTimeKind.Utc).AddTicks(8722),
+                            CreatedOn = new DateTime(2022, 12, 6, 9, 42, 17, 237, DateTimeKind.Utc).AddTicks(182),
                             CurrencyPairId = 1,
                             Value = 0.027076188000000001
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2022, 11, 18, 10, 34, 46, 333, DateTimeKind.Utc).AddTicks(8725),
+                            CreatedOn = new DateTime(2022, 12, 6, 9, 42, 17, 237, DateTimeKind.Utc).AddTicks(187),
                             CurrencyPairId = 2,
                             Value = 0.026223587
                         });
@@ -167,13 +152,10 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("TEXT");
 
-                    b.Property<double?>("CurrentSum")
-                        .HasColumnType("REAL");
-
                     b.Property<string>("Details")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsFavourite")
+                    b.Property<bool>("IsFavorite")
                         .HasColumnType("INTEGER");
 
                     b.Property<double?>("NeedSum")
@@ -184,9 +166,6 @@ namespace VolunteerRequestApp.Server.Core.Migrations
 
                     b.Property<int?>("StatusId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("TargetMilitary")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
@@ -237,31 +216,6 @@ namespace VolunteerRequestApp.Server.Core.Migrations
                             Id = 5,
                             Title = "Архівний"
                         });
-                });
-
-            modelBuilder.Entity("VolunteerRequestApp.Server.Core.Tag", b =>
-                {
-                    b.Property<string>("Title")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Title");
-
-                    b.ToTable("Tags");
-                });
-
-            modelBuilder.Entity("RequestTag", b =>
-                {
-                    b.HasOne("VolunteerRequestApp.Server.Core.Request", null)
-                        .WithMany()
-                        .HasForeignKey("RequestsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("VolunteerRequestApp.Server.Core.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsTitle")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("VolunteerRequestApp.Server.Core.Donation", b =>

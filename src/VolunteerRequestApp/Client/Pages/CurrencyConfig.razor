@@ -185,6 +185,5 @@
     async Task ChangeActivityState()
     {
         SelectedPair.IsActive = await pairRepository.ChangeCurrencyPairStatusAsync(SelectedPair.Id);
-
     }
 }

@@ -1,0 +1,157 @@
+﻿@page "/requests/edit/{id:int}"
+@using VolunteerRequestApp.Shared.Dtos.Request;
+@using VolunteerRequestApp.Client.Infrastructure;
+@using Syncfusion.Blazor.RichTextEditor
+@using VolunteerRequestApp.Shared.Dtos;
+
+@inject HttpRequestService requestService
+@inject HttpStatusService statusService;
+
+<h3>Редагування інформації про запит</h3>
+<hr />
+
+@if (Request is not null)
+{
+    <div class="row">
+        <EditForm Model="@Request" OnValidSubmit="@OnValidSubmit" class="col-md-8" OnInvalidSubmit="@OnInvalidSubmit">
+            <div class="row">
+                <div class="col-md-8">
+                    <DataAnnotationsValidator />
+                    <SfTextBox @bind-Value="@Request.Title" FloatLabelType="FloatLabelType.Auto" Placeholder="Назва запиту *"></SfTextBox>
+                    <ValidationMessage For="@(() => Request.Title)" class="badge bg-danger" />
+
+                </div>
+                <div class="col-md-4">
+                    @if (Request.Status is not null)
+                    {
+                        <SfDropDownList TItem="StatusDto" TValue="int" PopupHeight="230px" Placeholder="Статус запиту *" FloatLabelType="FloatLabelType.Auto" @bind-Value="Request.Status.Id" DataSource="@Statuses">
+                            <DropDownListEvents TItem="StatusDto" TValue="int" />
+                            <DropDownListFieldSettings Text="Title" Value="Id" />
+                        </SfDropDownList>
+                    }
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Опис запиту:</label>
+                    <SfRichTextEditor @bind-Value="@Request.Details" ShowCharCount="true" AutoSaveOnIdle="true">
+                    </SfRichTextEditor>
+                    <ValidationMessage For="@(() => Request.Details)" class="badge bg-danger" />
+                </div>
+            </div>
+            <br>
+            <div class="row">
+
+                <div class="col-md-4">
+                    <SfNumericTextBox TValue="double?" Format="c2" @bind-Value="@Request.NeedSum" Placeholder="Сума збору *" FloatLabelType="FloatLabelType.Auto"></SfNumericTextBox>
+                    <ValidationMessage For="@(() => Request.NeedSum)" class="badge bg-danger" />
+                </div>
+                <div class="col-md-4">
+                    <SfDateTimePicker id='DateTimePick1' @bind-Value="@Request.OpenDate" Placeholder="Дата відкриття *" FloatLabelType="FloatLabelType.Auto" ShowClearButton="true"></SfDateTimePicker>
+                    <ValidationMessage For="@(() => Request.OpenDate)" class="badge bg-danger" />
+                </div>
+                <div class="col-md-4">
+                    <SfDateTimePicker id='DateTimePick2' @bind-Value="@Request.CloseDate" Placeholder="Дата закриття *" FloatLabelType="FloatLabelType.Auto" ShowClearButton="true"></SfDateTimePicker>
+                    <ValidationMessage For="@(() => Request.CloseDate)" class="badge bg-danger" />
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <SfButton type="submit" CssClass="btn-block" IsPrimary="true">Зберегти</SfButton>
+                </div>
+            </div>
+        </EditForm>
+        <div class="col-md-4">
+            <PhotoGalleryComponent OnPhotoUploaded="@OnPhotoUploaded" OnMainPhotoChanged="@OnMainPhotoChanged" OnPhotoRemoved="@OnPhotoRemoved" RequestId="@Request.Id"></PhotoGalleryComponent>
+        </div>
+    </div>
+}
+
+<SfToast ID="toast_type" @ref=sfToast ShowCloseButton="true" ShowProgressBar="true">
+    <ToastPosition X="Right" Y="Top"></ToastPosition>
+</SfToast>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private RequestUpdateDto? Request { get; set; } = new RequestUpdateDto();
+
+    IEnumerable<StatusDto> Statuses = new List<StatusDto>();
+
+    SfToast sfToast;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Request = await requestService.GetRequestForEditAsync(Id);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.CompletedTask;
+        Statuses = await statusService.GetListAsync();
+    }
+
+    async Task OnValidSubmit()
+    {
+        await requestService.UpdateAsync(Request);
+
+        await sfToast.ShowAsync(new ToastModel
+            {
+                Title = "Ура!",
+                Content = $"Дані збережено!",
+                CssClass = "e-toast-success",
+                Icon = "e-success toast-icons"
+            });
+
+        StateHasChanged();
+    }
+
+    async Task OnInvalidSubmit()
+    {
+        await sfToast.ShowAsync(new ToastModel
+            {
+                Title = ":( Сумно",
+                Content = $"Знайдено помилки у даних, виправте їх та зберержіть результат",
+                CssClass = "e-toast-error",
+                Icon = "e-error toast-icons"
+            });
+    }
+
+    async Task OnPhotoUploaded()
+    {
+        await sfToast.ShowAsync(new ToastModel
+            {
+                Title = "Фото",
+                Content = $"Фото успішно завантажено на сервер.",
+                CssClass = "e-toast-success",
+                Icon = "e-success toast-icons"
+            });
+    }
+
+    async Task OnMainPhotoChanged()
+    {
+        await sfToast.ShowAsync(new ToastModel
+            {
+                Title = "Фото",
+                Content = $"Головне фото запиту змінено.",
+                CssClass = "e-toast-success",
+                Icon = "e-success toast-icons"
+            });
+    }
+
+    async Task OnPhotoRemoved()
+    {
+        await sfToast.ShowAsync(new ToastModel
+            {
+                Title = "Фото",
+                Content = $"Фото успішно видалено.",
+                CssClass = "e-toast-error",
+                Icon = "e-error toast-icons"
+            });
+    }
+}

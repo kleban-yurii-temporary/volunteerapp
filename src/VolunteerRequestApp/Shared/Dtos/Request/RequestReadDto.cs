@@ -20,12 +20,7 @@ namespace VolunteerRequestApp.Shared.Dtos.Request
         public double? NeedSum { get; set; }
         public double? CurrentSum { get; set; }
         public string? TargetMilitary { get; set; }
-        public bool IsFavourite { get; set; }
-
-        public string FrontPicture { get; set; }
-
-        //public virtual ICollection<Donation> Donations { get; set; } = new List<Donation>();
-        //public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
-        //public virtual ICollection<Photo>? Photos { get; set; }
+        public bool IsFavorite { get; set; }
+        public bool HasFrontPicture { get; set; }
     }
 }

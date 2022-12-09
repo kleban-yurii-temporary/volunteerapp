@@ -42,32 +42,42 @@ https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swa
 
 --- Currency Api 
 
-[*] Ad Spinner Component
+[+] Ad Spinner Component
 
-[*]. Create openexchange reading objects
+[+]. Create openexchange reading objects
 
-[*]. Add currency IsActive Status Entity - (view only is active for Requsts)
+[+]. Add currency IsActive Status Entity - (view only is active for Requsts)
 
-[*]. Add currency Rate IsActiveChange Status Change to UI + Controller
+[+]. Add currency Rate IsActiveChange Status Change to UI + Controller
 
-[*]. Get currencies list
+[+]. Get currencies list
 
-[*] Get currency rate
+[+] Get currency rate
 
-[-] Save currency rate:
+[+] Save currency rate:
 	- update selected
 	- update history
 
 --- Request
 
-[-] Create Dtos
+[+] Create Dtos
 
-[-] Create Request
+[+] Create Request
 
-[-] Get List Request
+[+] Get List Request
 
-[-] Create RequestComponent
+[+] Create RequestViewComponent
 
---
+[-] RequestEditFormDto + Resourses Messages Localization
+
+[-] Edit with Form
+
+[-] Edit with Syncfusion Components
+
+-- Docker Host
+
+-- Azure Deploy
+
+-- CI/CD with Github Actions and Azure
 
 

@@ -1,0 +1,210 @@
+﻿@page "/requests/{id:int}"
+
+@using System.Globalization;
+@using VolunteerRequestApp.Client.Infrastructure;
+@using VolunteerRequestApp.Shared.Dtos.Currency;
+@using VolunteerRequestApp.Shared.Dtos.Request;
+
+@inject HttpRequestService requestService
+@inject NavigationManager Navigation
+@inject HttpCurrencyPairService currencyService
+
+<h4>Інформація про запит</h4>
+<br />
+
+@if (Request != null)
+{
+    <div class="row">
+        <div class="col-8">
+
+            <SfCard>
+                <CardContent>
+                    <hr>
+
+                    <div style="background-color:#ccc; background-image:url(/api/requests/@Request.Id/photos/view?@(new Random().NextDouble())); position:relative; margin-bottom:15px; background-size: cover; background-position:center center; height: 200px; width: 100%">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.5); padding: 10px 15px">
+                            <span>Закладки:</span>
+                            <SfSwitch @bind-Checked="@isFav" ValueChange="FavChange" TChecked="bool"></SfSwitch>
+                        </div>
+                    </div>
+                    <h5>@Request.Title</h5>
+                    <p>@((MarkupString)Request.Details)</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            Дата відкриття:
+                            <strong>@Request.OpenDate.Value.ToString("dd.MM.yyyy")</strong>
+                        </div>
+                        <div class="col-6">
+                            Дата закриття:
+                            <strong>@Request.CloseDate.Value.ToString("dd.MM.yyyy")</strong>
+                        </div>
+                    </div>
+                </CardContent>
+                <CardFooter>
+                    <CardFooterContent>
+                        <SfButton CssClass="e-success" OnClick="@GoToEdit">Редагувати</SfButton>
+                    </CardFooterContent>
+                </CardFooter>
+            </SfCard>
+
+
+        </div>
+        <div class="col-4">
+            <SfCard>
+                <CardHeader Title="Донати" />
+                <CardContent>
+                    Потрібно: <strong>@Math.Round((decimal)Request.NeedSum, 2)</strong> грн.<br />
+                    Зібрано: <strong>@Math.Round((decimal)Request.CurrentSum, 2)</strong> грн.<br />
+                    Залишилося зібрати: <strong>@(Math.Round((decimal)Request.NeedSum - (decimal)Request.CurrentSum, 2))</strong> грн.
+                    <hr>
+                    @if (CurrencyPairs.Any())
+                    {
+                        <p>У інших валютах</p>
+
+                        @foreach (var rt in CurrencyPairs)
+                        {
+                            <div>@rt.To: <strong>@Math.Round((decimal)Request.NeedSum * (decimal)rt.CurrentValue, 2)</strong></div>
+                        }
+                    }
+                    <br>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: @progress.ToString().Replace(",", ".")%;" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">@progress%</div>
+                    </div>
+
+                </CardContent>
+            </SfCard>
+            <br>
+
+            <SfCard>
+                <CardHeader Title="Задонатити :)" />
+                <CardContent>
+                    <SfNumericTextBox TValue="double" Format="c2" @bind-Value="@donateSum"></SfNumericTextBox><br />
+                    <SfButton IsPrimary="true" OnClick="@DonateAsync">Надіслати кошти</SfButton>
+                </CardContent>
+            </SfCard>
+            <br>
+
+            <SfCard>
+                <CardHeader Title="Крайні донати:" />
+                <CardContent>
+                    @if (Top5Donates != null)
+                    {
+                        <SfListBox DataSource="@Top5Donates" TValue="int[]" TItem="DonationReadDto">
+                            <ListBoxFieldSettings Text="UserId" Value="Id"></ListBoxFieldSettings>
+                            <ListBoxTemplates TItem="DonationReadDto">
+                                <ItemTemplate>
+                                    <div>
+                                        @{
+                                            var d = context as DonationReadDto;
+                                        }
+                                        <span>@d.UserName</span>: <strong>@d.Amount грн.</strong> (@d.Date.Value.ToString("dd.MM.yyyy HH:mm", new CultureInfo("en")))
+                                    </div>
+                                </ItemTemplate>
+                            </ListBoxTemplates>
+                        </SfListBox>
+                    }
+                    else
+                    {
+                        <SpinnerComponent></SpinnerComponent>
+                    }
+                </CardContent>
+            </SfCard>
+        </div>
+    </div>
+}
+else
+{
+    <SpinnerComponent></SpinnerComponent>
+}
+
+<SfToast ID="toast_type" @ref=sfToast ShowCloseButton="true" ShowProgressBar="true">
+    <ToastPosition X="Right" Y="Top"></ToastPosition>
+</SfToast>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    RequestReadDto Request = null;
+    IEnumerable<DonationReadDto> Top5Donates;
+    private IEnumerable<CurrencyPairReadDto> CurrencyPairs = new List<CurrencyPairReadDto>();
+    double progress = 0;
+    double donateSum = 1000;
+    string user = "ivan01";
+
+    SfToast sfToast;
+
+    bool isFav = false;
+
+    async Task InitDataAsync()
+    {
+        Request = await requestService.GetAsync(Id);
+        Top5Donates = await requestService.GetDonationsAsync(Id);
+        try
+        {
+            progress = (double)Math.Round((decimal)Request.CurrentSum / (decimal)Request.NeedSum * 100, 2);
+        }
+        catch (DivideByZeroException ex)
+        {
+            progress = 0;
+        }
+
+        isFav = Request.IsFavorite;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        CurrencyPairs = await currencyService.GetCurrencyPairsListAsync(true);
+        await InitDataAsync();
+    }
+
+    async Task DonateAsync()
+    {
+        await requestService.CreateDonationAsync(Id, donateSum, "SomeUser");
+        await InitDataAsync();
+        CurrencyPairs = await currencyService.GetCurrencyPairsListAsync(true);
+        StateHasChanged();
+
+        await sfToast.ShowAsync(new ToastModel
+            {
+                Title = "Ура! Донат",
+                Content = $"Ваш донат у сумі {donateSum} грн усіпшно додадно! Дякуємо!",
+                CssClass = "e-toast-success",
+                Icon = "e-success toast-icons"
+            });
+    }
+
+    async Task GoEdit()
+    {
+        Navigation.NavigateTo($"/requests/edit/{Id}");
+    }
+
+    private async Task FavChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+    {
+        await requestService.ChangeFavStateAsync(Id, args.Checked);
+
+        ToastModel toast = new ToastModel { Title = "Закладки" };
+
+        if (args.Checked)
+        {
+            toast.Content = $"Запит додано у закладки";
+            toast.CssClass = "e-toast-info";
+            toast.Icon = "e-info toast-icons";
+        }
+        else
+        {
+            toast.Content = $"Запит видалено із закладок";
+            toast.CssClass = "e-toast-danger";
+            toast.Icon = "e-warning toast-icons";
+        }
+
+        await sfToast.ShowAsync(toast);
+    }
+
+    void GoToEdit()
+    {
+        Navigation.NavigateTo($"/requests/edit/{Request.Id}");
+    }
+}

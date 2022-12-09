@@ -1,0 +1,117 @@
+﻿@using Syncfusion.Blazor.SplitButtons
+@using VolunteerRequestApp.Client.Infrastructure;
+@using VolunteerRequestApp.Shared.Dtos.Request;
+
+@inject HttpRequestService requestService
+
+<h6>Фотогалерея:</h6>
+
+<SfUploader ID="UploadFiles" AllowedExtensions=".jpg, .jpeg, .png">
+    <UploaderAsyncSettings SaveUrl="@($"api/requests/{@RequestId}/photos")">
+    </UploaderAsyncSettings>
+    <UploaderEvents Success="OnFileUploaded" />
+</SfUploader>
+<hr>
+@if (Photos is not null)
+{
+    if (Photos.Any())
+    {
+        @foreach (var p in Photos)
+        {
+            <SfCard>
+                <CardContent>
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            @if (p.IsMain)
+                            {
+                                <Syncfusion.Blazor.Popups.SfTooltip Content="Головне зображення">
+                                    <SfButton CssClass="e-success" Disabled="true">
+                                        <SfIcon Name="IconName.Check"></SfIcon>
+                                    </SfButton>
+                                </Syncfusion.Blazor.Popups.SfTooltip>
+                                <Syncfusion.Blazor.Popups.SfTooltip Content="Не можливо видалити">
+                                    <SfButton Disabled="true" CssClass="e-danger">
+                                        <SfIcon Name="IconName.Trash"></SfIcon>
+                                    </SfButton>
+                                </Syncfusion.Blazor.Popups.SfTooltip>
+                            }
+                            else
+                            {
+                                <Syncfusion.Blazor.Popups.SfTooltip Content="Зробити головною?">
+                                    <SfButton OnClick="@(e => MakeMainAsync(p.Id))">
+                                        <SfIcon Name="IconName.ListOrdered"></SfIcon>
+                                    </SfButton>
+                                </Syncfusion.Blazor.Popups.SfTooltip>
+                                <Syncfusion.Blazor.Popups.SfTooltip Content="Видалити?">
+                                    <SfButton OnClick="@(e => RemoveAsync(p.Id))" CssClass="e-danger">
+                                        <SfIcon Name="IconName.Trash"></SfIcon>
+                                    </SfButton>
+                                </Syncfusion.Blazor.Popups.SfTooltip>
+                            }
+
+                        </div>
+                        <div class="col-md-7">
+                            <img src="@($"/api/requests/{@RequestId}/photos/view?photoId={p.Id}")" style="height: 150px; width: auto" class="img-thumbnail" alt="" />
+                        </div>
+                    </div>
+                </CardContent>
+            </SfCard>
+            <br />
+        }
+    }
+    else
+    {
+        <SfMessage Severity="MessageSeverity.Info">Зображення відсутні...</SfMessage>
+    }
+}
+else
+{
+    <SpinnerComponent></SpinnerComponent>
+}
+
+@code {
+
+    [Parameter]
+    public int RequestId { get; set; }
+
+    [Parameter]
+    public EventCallback OnPhotoUploaded { get; set; }
+
+    [Parameter]
+    public EventCallback OnPhotoRemoved { get; set; }
+
+    [Parameter]
+    public EventCallback OnMainPhotoChanged { get; set; }
+
+    public IEnumerable<PhotoDto> Photos = null;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Photos = await requestService.GetPhotosAsync(RequestId);
+    }
+
+    async Task OnFileUploaded()
+    {
+        Photos = await requestService.GetPhotosAsync(RequestId);
+        await OnPhotoUploaded.InvokeAsync();
+    }
+
+    async Task MakeMainAsync(int photoId)
+    {
+        foreach (var p in Photos)
+        {
+            p.IsMain = p.Id == photoId;
+        }
+
+        await requestService.SetMainPhotoAsync(RequestId, photoId);
+        await OnMainPhotoChanged.InvokeAsync();
+    }
+
+    async Task RemoveAsync(int photoId)
+    {
+        await requestService.RemovePhotoAsync(RequestId, photoId);
+        Photos = Photos.Where(x => x.Id != photoId).ToList();
+        await OnPhotoRemoved.InvokeAsync();
+    }
+}

@@ -15,7 +15,7 @@ namespace VolunteerRequestApp.Server.Core
         public int Id { get; set; }
         public Request? Request { get; set; }
         public DateTime? Date { get; set; }
-        public string? UserId { get; set; }
-        public double? Sum { get; set; }
+        public string? UserName { get; set; }
+        public double? Amount { get; set; }
     }
 }

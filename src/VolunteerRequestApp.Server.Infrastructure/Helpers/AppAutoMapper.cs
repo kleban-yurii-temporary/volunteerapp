@@ -26,9 +26,17 @@ namespace VolunteerRequestApp.Server.Infrastructure.Helpers
                 .ForMember(dest => dest.Records, opt => opt.MapFrom(c => c.Records.OrderByDescending(x => x.CreatedOn))); ;
 
             CreateMap<RequestCreateDto, Request>();
-            CreateMap<Request, RequestReadDto>();
+            CreateMap<Request, RequestReadDto>()
+                .ForMember(dest => dest.CurrentSum, opt => opt.MapFrom( r=> r.Donations.Sum(x=> x.Amount)))
+                .ForMember(dest => dest.HasFrontPicture, opt => opt.MapFrom(r => r.Photos.Any(x=> x.IsMain)));
 
-            CreateMap<Request, RequestCardViewDto>();
+            CreateMap<Request, RequestUpdateDto>();
+            CreateMap<RequestUpdateDto, Request>();
+
+            CreateMap<Donation, DonationReadDto>();
+            CreateMap<DonationCreateDto, Donation>();
+
+            CreateMap<Photo, PhotoDto>();
         }
     }
 }

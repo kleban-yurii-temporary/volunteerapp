@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace VolunteerRequestApp.Shared.Dtos.Request
 {
-    public class RequestCardViewDto
+    public class _RequestCardViewDto
     {
         public int Id { get; set; }
         public string? Title { get; set; }
@@ -20,7 +20,7 @@ namespace VolunteerRequestApp.Shared.Dtos.Request
         public double? NeedSum { get; set; }
         public double? CurrentSum { get; set; }
         public string? TargetMilitary { get; set; }
-        public bool IsFavourite { get; set; }
+        public bool IsFavorite { get; set; }
 
 
         //public virtual ICollection<Donation> Donations { get; set; } = new List<Donation>();

@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using System.Globalization;
 using System.Reflection;
 using VolunteerRequestApp.Server.Core;
 using VolunteerRequestApp.Server.Infrastructure;
@@ -37,11 +39,32 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlPath);
 });
 
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    // Define the list of cultures your app will support 
+    var supportedCultures = new List<CultureInfo>()
+                {
+                    new CultureInfo("uk-UA")
+                };
+
+    // Set the default culture 
+    options.DefaultRequestCulture = new RequestCulture("uk-UA");
+    options.DefaultRequestCulture.Culture.NumberFormat.CurrencySymbol = supportedCultures[1].NumberFormat.CurrencySymbol;
+
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+    options.RequestCultureProviders = new List<IRequestCultureProvider>() {
+                 new QueryStringRequestCultureProvider() 
+                };
+});
+
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddScoped<StatusRepository>();
 builder.Services.AddScoped<CurrencyPairRepository>();
 builder.Services.AddScoped<CurrencyApiHelper>();
 builder.Services.AddScoped<RequestRepository>();
+builder.Services.AddScoped<DonationRepository>();
 
 var app = builder.Build();
 
@@ -67,7 +90,6 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 
 app.MapRazorPages();
 app.MapControllers();

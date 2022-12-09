@@ -3,41 +3,45 @@
 @using VolunteerRequestApp.Shared.Dtos.Currency;
 @using VolunteerRequestApp.Shared.Dtos.Request;
 
-@inject HttpRequestService requestService
+@inject HttpRequestService RequestService
+@inject NavigationManager Navigation
 
-<PageTitle>Index</PageTitle>
+<SfButton CssClass="float-end e-success" OnClick="@GoToNewRequestPage">Додати новий запит</SfButton>
 
-<h3>Запити</h3>
-@*
-<div class="row">
-    <div class="col-2">
-        <label>Назва</label>
-        <input type="text" class="form-control" />
+<h4>Запити</h4>
+
+<hr />
+@if(Requests is not null && Requests.Any())
+{
+    <div class="row">
+        @foreach (var r in Requests)
+        {
+            <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                <RequestCardComponent Request="r"></RequestCardComponent>
+            </div>
+        }
     </div>
-    <div class="col-2">
-        <label>Назва</label>
-        <input type="text" class="form-control" />
-    </div>
-</div>
-*@
+} 
+else if(Requests is not null)
+{
+    <SfMessage Severity="MessageSeverity.Warning">Інформація про запити відсутня...</SfMessage>
 
-<SpinnerComponent Visible="!Requests.Any()"></SpinnerComponent>
-
-<div class="row">
-    @foreach (var r in Requests)
-    {
-        <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 col-sm-12">
-            <RequestCardComponent Request="r"></RequestCardComponent>
-        </div>
-    }
-</div>
+} else
+{
+    <SpinnerComponent></SpinnerComponent>
+}
 
 @code {
 
-    private IEnumerable<RequestReadDto> Requests = new List<RequestReadDto>();
+    private IEnumerable<RequestReadDto> Requests = null;
 
     protected override async Task OnInitializedAsync()
     {
-        Requests = await requestService.GetRequestsAsync();        
+        Requests = await RequestService.GetRequestsAsync();        
+    }
+
+    void GoToNewRequestPage()
+    {
+        Navigation.NavigateTo("/requests/new");
     }
 }

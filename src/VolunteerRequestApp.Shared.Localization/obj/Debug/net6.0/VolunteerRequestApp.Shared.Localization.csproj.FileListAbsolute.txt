@@ -1,0 +1,12 @@
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\bin\Debug\net6.0\VolunteerRequestApp.Shared.Localization.deps.json
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\bin\Debug\net6.0\VolunteerRequestApp.Shared.Localization.dll
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\bin\Debug\net6.0\VolunteerRequestApp.Shared.Localization.pdb
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.csproj.AssemblyReference.cache
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.GeneratedMSBuildEditorConfig.editorconfig
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.AssemblyInfoInputs.cache
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.AssemblyInfo.cs
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.csproj.CoreCompileInputs.cache
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.dll
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\refint\VolunteerRequestApp.Shared.Localization.dll
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.pdb
+E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\ref\VolunteerRequestApp.Shared.Localization.dll

@@ -15,7 +15,6 @@ namespace VolunteerRequestApp.Server.Core
         public DbSet<Donation> Donations { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        public DbSet<Tag> Tags { get; set; }
         public DbSet<CurrencyPair> CurrencyPairs { get; set; }
         public DbSet<ExchangeRate> ExchangeRates { get; set; }
 
@@ -40,8 +39,6 @@ namespace VolunteerRequestApp.Server.Core
                 new ExchangeRate { Id = 1, CurrencyPairId = 1, CreatedOn = DateTime.UtcNow, Value = 0.027076188 },
                 new ExchangeRate { Id = 2, CurrencyPairId = 2, CreatedOn = DateTime.UtcNow, Value = 0.026223587 }
             });
-
-            modelBuilder.Entity<Request>().HasMany(x=> x.Tags).WithMany(x => x.Requests);
 
             base.OnModelCreating(modelBuilder);
         }
