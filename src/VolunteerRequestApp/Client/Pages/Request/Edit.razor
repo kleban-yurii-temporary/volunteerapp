@@ -92,7 +92,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.CompletedTask;
+       // await Task.CompletedTask;
         Statuses = await statusService.GetListAsync();
     }
 
