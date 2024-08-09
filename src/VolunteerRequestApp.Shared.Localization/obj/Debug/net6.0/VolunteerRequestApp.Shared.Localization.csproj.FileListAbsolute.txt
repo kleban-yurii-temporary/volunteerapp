@@ -10,3 +10,15 @@ E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\De
 E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\refint\VolunteerRequestApp.Shared.Localization.dll
 E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.pdb
 E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\ref\VolunteerRequestApp.Shared.Localization.dll
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\bin\Debug\net6.0\VolunteerRequestApp.Shared.Localization.deps.json
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\bin\Debug\net6.0\VolunteerRequestApp.Shared.Localization.dll
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\bin\Debug\net6.0\VolunteerRequestApp.Shared.Localization.pdb
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.GeneratedMSBuildEditorConfig.editorconfig
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.AssemblyInfoInputs.cache
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.AssemblyInfo.cs
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.csproj.CoreCompileInputs.cache
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.sourcelink.json
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.dll
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\refint\VolunteerRequestApp.Shared.Localization.dll
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\VolunteerRequestApp.Shared.Localization.pdb
+H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\obj\Debug\net6.0\ref\VolunteerRequestApp.Shared.Localization.dll

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Repos\\OA_2023\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\VolunteerRequestApp.Shared.Localization.csproj": {}
+    "H:\\Education\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\VolunteerRequestApp.Shared.Localization.csproj": {}
   },
   "projects": {
-    "E:\\Repos\\OA_2023\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\VolunteerRequestApp.Shared.Localization.csproj": {
+    "H:\\Education\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\VolunteerRequestApp.Shared.Localization.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Repos\\OA_2023\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\VolunteerRequestApp.Shared.Localization.csproj",
+        "projectUniqueName": "H:\\Education\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\VolunteerRequestApp.Shared.Localization.csproj",
         "projectName": "VolunteerRequestApp.Shared.Localization",
-        "projectPath": "E:\\Repos\\OA_2023\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\VolunteerRequestApp.Shared.Localization.csproj",
-        "packagesPath": "C:\\Users\\yura\\.nuget\\packages\\",
-        "outputPath": "E:\\Repos\\OA_2023\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\obj\\",
+        "projectPath": "H:\\Education\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\VolunteerRequestApp.Shared.Localization.csproj",
+        "packagesPath": "C:\\Users\\Yura\\.nuget\\packages\\",
+        "outputPath": "H:\\Education\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\yura\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yura\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,6 +34,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -55,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205\\RuntimeIdentifierGraph.json"
         }
       }
     }

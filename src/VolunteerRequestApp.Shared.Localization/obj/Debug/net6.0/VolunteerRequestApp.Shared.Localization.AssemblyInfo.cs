@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VolunteerRequestApp.Shared.Localization")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7cb6274cc93ddda5a9b75eb3fc1a9f1f64b9c539")]
 [assembly: System.Reflection.AssemblyProductAttribute("VolunteerRequestApp.Shared.Localization")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VolunteerRequestApp.Shared.Localization")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

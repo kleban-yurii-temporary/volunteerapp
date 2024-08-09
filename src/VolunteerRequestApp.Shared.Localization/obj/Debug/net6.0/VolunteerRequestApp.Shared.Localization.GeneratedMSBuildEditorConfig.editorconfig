@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = VolunteerRequestApp.Shared.Localization
-build_property.ProjectDir = E:\Repos\OA_2023\volunteerapp\src\VolunteerRequestApp.Shared.Localization\
+build_property.ProjectDir = H:\Education\volunteerapp\src\VolunteerRequestApp.Shared.Localization\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
