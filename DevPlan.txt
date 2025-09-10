@@ -1,7 +1,3 @@
-113 ghbrkflyf vfntvfnbrf
-
-5600010121101240
-
 [+] 1. Solution Structure
 
 [+] 2. Database Structure
@@ -72,16 +68,16 @@ https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swa
 
 [+] Create RequestViewComponent
 
-[-] RequestEditFormDto + Resourses Messages Localization
+[+] RequestEditFormDto + Resourses Messages Localization
 
-[-] Edit with Form
+[+] Edit with Form
 
-[-] Edit with Syncfusion Components
+[+] Edit with Syncfusion Components
 
 -- Docker Host
 
--- Azure Deploy
-
 -- CI/CD with Github Actions and Azure
+
+-- Azure Deploy
 
 

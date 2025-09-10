@@ -16,7 +16,7 @@
     <div class="row">
         @foreach (var r in Requests)
         {
-            <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12">
+            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 col-sm-12">
                 <RequestCardComponent Request="r"></RequestCardComponent>
             </div>
         }
@@ -26,7 +26,8 @@ else if(Requests is not null)
 {
     <SfMessage Severity="MessageSeverity.Warning">Інформація про запити відсутня...</SfMessage>
 
-} else
+} 
+else
 {
     <SpinnerComponent></SpinnerComponent>
 }

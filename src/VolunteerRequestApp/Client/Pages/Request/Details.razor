@@ -162,18 +162,23 @@ else
 
     async Task DonateAsync()
     {
-        await requestService.CreateDonationAsync(Id, donateSum, "SomeUser");
-        await InitDataAsync();
-        CurrencyPairs = await currencyService.GetCurrencyPairsListAsync(true);
-        StateHasChanged();
+       var flag = await requestService.CreateDonationAsync(Id, donateSum, "SomeUser");
 
-        await sfToast.ShowAsync(new ToastModel
-            {
-                Title = "Ура! Донат",
-                Content = $"Ваш донат у сумі {donateSum} грн усіпшно додадно! Дякуємо!",
-                CssClass = "e-toast-success",
-                Icon = "e-success toast-icons"
-            });
+       if(flag)
+       {
+            await InitDataAsync();
+
+            CurrencyPairs = await currencyService.GetCurrencyPairsListAsync(true);
+            StateHasChanged();
+
+            await sfToast.ShowAsync(new ToastModel
+                {
+                    Title = "Ура! Донат",
+                    Content = $"Ваш донат у сумі {donateSum} грн усіпшно додадно! Дякуємо!",
+                    CssClass = "e-toast-success",
+                    Icon = "e-success toast-icons"
+                });
+       }
     }
 
     async Task GoEdit()

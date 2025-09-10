@@ -31,7 +31,7 @@ namespace VolunteerRequestApp.Server.Core
             modelBuilder.Entity<CurrencyPair>().HasData(new CurrencyPair[]
             {
                 new CurrencyPair { Id = 1, СurrencyFrom = "UAH", СurrencyTo = "USD", IsActive = true},
-                new CurrencyPair { Id = 2, СurrencyFrom = "UAH", СurrencyTo = "EUR", IsActive = true},
+                new CurrencyPair { Id = 2, СurrencyFrom = "UAH", СurrencyTo = "EUR", IsActive = false},
             });
 
             modelBuilder.Entity<ExchangeRate>().HasData(new ExchangeRate[]

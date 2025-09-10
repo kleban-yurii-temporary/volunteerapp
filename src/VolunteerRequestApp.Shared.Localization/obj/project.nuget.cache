@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hibY2r70NBUZy9Ui2klzIuXz+efVY36sACcQDHItXTCjQPD8rmWu/yyW7qbTgH5hSrUYhnqbdupooToQGMlr9Q==",
+  "dgSpecHash": "JEPZQfqL0cw=",
   "success": true,
-  "projectFilePath": "H:\\Education\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\VolunteerRequestApp.Shared.Localization.csproj",
+  "projectFilePath": "E:\\volunteerapp\\src\\VolunteerRequestApp.Shared.Localization\\VolunteerRequestApp.Shared.Localization.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
